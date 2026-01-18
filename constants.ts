@@ -54,6 +54,9 @@ export const ITINERARY: DayPlan[] = [
 ];
 
 export const INITIAL_CHECKLIST: ChecklistItem[] = [
+  { id: 'vjw', text: '搞 Visit Japan Web (QR Code)', completed: false, assignee: '大哥', category: 'todo' },
+  { id: 'yen', text: '唱 Yen (現金備用)', completed: false, assignee: '大哥', category: 'todo' },
+  { id: 'power', text: '尿袋差滿電 🔋', completed: false, assignee: '小媛', category: 'luggage' },
   { id: '1', text: '護照效期檢查', completed: false, assignee: '大哥', category: 'todo' },
   { id: '2', text: '辦理日文譯本駕照', completed: false, assignee: '大哥', category: 'todo' },
   { id: '3', text: '預約浮潛 (青潛)', completed: false, assignee: '小媛', category: 'todo' },
