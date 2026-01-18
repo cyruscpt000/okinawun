@@ -41,15 +41,18 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     if (!travelData) return (
-      <div className="flex flex-col items-center justify-center p-20 text-sky-500 gap-4">
-        <div className="w-8 h-8 border-4 border-sky-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex flex-col items-center justify-center p-20 text-[#98ba5c] gap-4">
+        <div className="w-8 h-8 border-4 border-[#98ba5c] border-t-transparent rounded-full animate-spin"></div>
         <p>正在連接沖繩數據庫...</p>
       </div>
     );
 
     switch (activeTab) {
       case 'itinerary': 
-        return <Itinerary data={travelData.itinerary} />;
+        return <Itinerary 
+                  data={travelData.itinerary} 
+                  onUpdate={(newData) => updateFirebase({ itinerary: newData })}
+                />;
       case 'checklist': 
         return <Checklist 
                   data={travelData.checklist} 
@@ -60,7 +63,10 @@ const App: React.FC = () => {
       case 'ai':
         return <AIChat />;
       default: 
-        return <Itinerary data={travelData.itinerary} />;
+        return <Itinerary 
+                  data={travelData.itinerary} 
+                  onUpdate={(newData) => updateFirebase({ itinerary: newData })}
+                />;
     }
   };
 

@@ -31,9 +31,12 @@ export interface Expense {
   [key: string]: any;
 }
 
+export type ChecklistCategory = 'todo' | 'luggage' | 'places' | 'shopping';
+
 export interface ChecklistItem {
   id: string;
   text: string;
   completed: boolean;
+  category: ChecklistCategory;
   assignee?: string;
 }
