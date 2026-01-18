@@ -4,8 +4,9 @@ import Layout from './components/Layout';
 import Itinerary from './components/Itinerary';
 import Checklist from './components/Checklist';
 import Budget from './components/Budget';
+import AIChat from './components/AIChat';
 import { db } from './services/firebase';
-// 移除不支援的具名導出，改用 db 實例方法
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { ITINERARY, INITIAL_CHECKLIST, EXPENSES } from './constants';
 
 const App: React.FC = () => {
@@ -13,13 +14,10 @@ const App: React.FC = () => {
   const [travelData, setTravelData] = useState<any>(null);
 
   useEffect(() => {
-    // 使用 Firebase v8 語法修復 doc() 導出錯誤
-    const docRef = db.doc("travel/okinawa2026");
+    const docRef = doc(db, "travel", "okinawa2026");
     
-    // 使用 Firebase v8 實例方法修復 onSnapshot 導出錯誤
-    const unsubscribe = docRef.onSnapshot(async (snapshot) => {
-      // 在 v8 中 exists 是屬性而非方法
-      if (snapshot.exists) {
+    const unsubscribe = onSnapshot(docRef, async (snapshot) => {
+      if (snapshot.exists()) {
         setTravelData(snapshot.data());
       } else {
         const initialData = {
@@ -28,8 +26,7 @@ const App: React.FC = () => {
           expenses: EXPENSES,
           lastUpdated: new Date().toISOString()
         };
-        // 使用 v8 實例方法修復 setDoc 導出錯誤
-        await docRef.set(initialData);
+        await setDoc(docRef, initialData);
         setTravelData(initialData);
       }
     });
@@ -38,9 +35,8 @@ const App: React.FC = () => {
   }, []);
 
   const updateFirebase = async (newData: any) => {
-    // 使用 Firebase v8 實例方法獲取引用並更新數據
-    const docRef = db.doc("travel/okinawa2026");
-    await docRef.set({ ...travelData, ...newData, lastUpdated: new Date().toISOString() });
+    const docRef = doc(db, "travel", "okinawa2026");
+    await setDoc(docRef, { ...travelData, ...newData, lastUpdated: new Date().toISOString() });
   };
 
   const renderContent = () => {
@@ -61,6 +57,8 @@ const App: React.FC = () => {
                 />;
       case 'budget': 
         return <Budget data={travelData.expenses} />;
+      case 'ai':
+        return <AIChat />;
       default: 
         return <Itinerary data={travelData.itinerary} />;
     }
