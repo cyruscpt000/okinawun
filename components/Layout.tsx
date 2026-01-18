@@ -21,12 +21,12 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
       <header className="bg-sky-500 text-white p-6 rounded-b-3xl shadow-lg">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold">沖繩之行 2025</h1>
-            <p className="text-sky-100 text-sm">OKINAWA ADVENTURE</p>
+            <h1 className="text-2xl font-bold">沖繩之行 2026</h1>
+            <p className="text-sky-100 text-sm font-medium tracking-widest uppercase">Okinawa Adventure</p>
           </div>
           <div className="flex -space-x-3">
-            <img src="https://picsum.photos/id/64/100/100" className="w-10 h-10 rounded-full border-2 border-white" title="大哥" />
-            <img src="https://picsum.photos/id/102/100/100" className="w-10 h-10 rounded-full border-2 border-white" title="小媛" />
+            <img src="https://picsum.photos/id/64/100/100" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" title="大哥" />
+            <img src="https://picsum.photos/id/102/100/100" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" title="小媛" />
           </div>
         </div>
       </header>
@@ -43,11 +43,11 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex flex-col items-center gap-1 transition-all ${
-              activeTab === tab.id ? 'text-sky-600 font-bold scale-110' : 'text-gray-400'
+              activeTab === tab.id ? 'text-sky-600 font-bold scale-110' : 'text-gray-400 hover:text-sky-300'
             }`}
           >
             <span className="text-xl">{tab.icon}</span>
-            <span className="text-xs">{tab.label}</span>
+            <span className="text-[10px] mt-1 uppercase tracking-tighter">{tab.label}</span>
           </button>
         ))}
       </nav>
