@@ -7,7 +7,7 @@ import Budget from './components/Budget';
 import AIChat from './components/AIChat';
 import { db } from './services/firebase';
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
-import { ITINERARY, INITIAL_CHECKLIST, EXPENSES } from './constants';
+import { ITINERARY, INITIAL_CHECKLIST, INITIAL_TRANSACTIONS } from './constants';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('itinerary');
@@ -23,7 +23,7 @@ const App: React.FC = () => {
         const initialData = {
           itinerary: ITINERARY,
           checklist: INITIAL_CHECKLIST,
-          expenses: EXPENSES,
+          expenses: INITIAL_TRANSACTIONS,
           lastUpdated: new Date().toISOString()
         };
         await setDoc(docRef, initialData);
@@ -59,7 +59,10 @@ const App: React.FC = () => {
                   onUpdate={(newList) => updateFirebase({ checklist: newList })} 
                 />;
       case 'budget': 
-        return <Budget data={travelData.expenses} />;
+        return <Budget 
+                  data={travelData.expenses} 
+                  onUpdate={(newData) => updateFirebase({ expenses: newData })}
+                />;
       case 'ai':
         return <AIChat />;
       default: 

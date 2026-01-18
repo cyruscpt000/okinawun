@@ -25,10 +25,14 @@ export interface Member {
   role: string;
 }
 
-export interface Expense {
-  category: string;
+export interface Transaction {
+  id: string;
+  item: string;
   amount: number;
-  [key: string]: any;
+  payer: string;
+  paymentMethod: 'cash' | 'card';
+  type: 'food' | 'transport' | 'hotel' | 'sightseeing' | 'shopping';
+  timestamp: string;
 }
 
 export type ChecklistCategory = 'todo' | 'luggage' | 'places' | 'shopping';
