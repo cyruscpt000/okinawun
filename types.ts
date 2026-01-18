@@ -4,11 +4,17 @@ export interface ItineraryItem {
   activity: string;
   location: string;
   memo?: string;
-  type: 'food' | 'transport' | 'hotel' | 'sightseeing' | 'shopping';
+  phone?: string;
+  mapcode?: string;
+  link?: string;
+  duration?: string;
+  highlight?: boolean;
+  type: 'food' | 'transport' | 'hotel' | 'sightseeing' | 'shopping' | 'flight';
 }
 
 export interface DayPlan {
   date: string;
+  weekday: string;
   title: string;
   items: ItineraryItem[];
 }
@@ -22,7 +28,6 @@ export interface Member {
 export interface Expense {
   category: string;
   amount: number;
-  // Add index signature to satisfy Recharts type requirements for dynamic data keys
   [key: string]: any;
 }
 
