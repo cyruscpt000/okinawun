@@ -1,6 +1,6 @@
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, doc, onSnapshot, setDoc, updateDoc, collection, getDocs } from "firebase/firestore";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 // 請在這裡填入你在 Firebase Console 獲取的 Config
 // 為了演示，我們假設這些值可以透過環境變量獲取
@@ -14,13 +14,16 @@ const firebaseConfig = {
   measurementId: "G-8YSGBTM7RD"
 };
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+// 使用 Firebase v8 語法初始化應用，修復 initializeApp 導出錯誤
+const app = firebase.initializeApp(firebaseConfig);
+// 使用 Firebase v8 語法獲取 Firestore 實例，修復 getFirestore 導出錯誤
+export const db = app.firestore();
 
 // 數據同步 Hook 的邏輯基礎
 export const syncData = (collectionName: string, docId: string, callback: (data: any) => void) => {
-  return onSnapshot(doc(db, collectionName, docId), (doc) => {
-    if (doc.exists()) {
+  // 使用 v8 鏈式調用修復 collection, doc, onSnapshot 導出錯誤
+  return db.collection(collectionName).doc(docId).onSnapshot((doc) => {
+    if (doc.exists) {
       callback(doc.data());
     } else {
       callback(null);
@@ -29,5 +32,6 @@ export const syncData = (collectionName: string, docId: string, callback: (data:
 };
 
 export const saveData = async (collectionName: string, docId: string, data: any) => {
-  await setDoc(doc(db, collectionName, docId), data);
+  // 使用 v8 語法修復 setDoc 導出錯誤
+  await db.collection(collectionName).doc(docId).set(data);
 };

@@ -11,8 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
   const tabs = [
     { id: 'itinerary', label: '行程', icon: '📅' },
     { id: 'checklist', label: '清單', icon: '✅' },
-    { id: 'budget', label: '預算', icon: '💰' },
-    { id: 'ai', label: 'AI 助手', icon: '🤖' }
+    { id: 'budget', label: '預算', icon: '💰' }
   ];
 
   return (
